@@ -1,19 +1,20 @@
 (() => {
     // Créez un div pour le conteneur du graphique
-    var chartContainer = document.createElement("div");
-    chartContainer.id = "chart-container";
+    var chartContainer1 = document.createElement("div");
+    chartContainer1.id = "chart-container1";
+
 
     // Créez un canvas pour le graphique
-    var chartCanvas = document.createElement("canvas");
+    var chartCanvas1 = document.createElement("canvas");
 
     // Ajoutez le canvas au div
-    chartContainer.appendChild(chartCanvas);
+    chartContainer1.appendChild(chartCanvas1);
 
     // Trouvez le tableau existant
-    var table = document.getElementById("table1");
+    var table1 = document.getElementById("table1");
 
     // Insérez le conteneur du graphique juste au-dessus du tableau
-    table.parentNode.insertBefore(chartContainer, table);
+    table1.parentNode.insertBefore(chartContainer1, table1);
 
     // Créez un tableau pour stocker les années (échelle de mesure X)
     var years = [];
@@ -22,7 +23,7 @@
     var countriesData = [];
 
     // Extrayez les années du tableau à partir de la première rangée
-    var tbody = table.querySelector("tbody");
+    var tbody = table1.querySelector("tbody");
     var firstRow = tbody.querySelector("tr");
     var firstRowCells = firstRow.querySelectorAll("th");
 
@@ -90,7 +91,7 @@
     };
 
     // Créez un contexte pour le canvas
-    var ctx = chartCanvas.getContext('2d');
+    var ctx = chartCanvas1.getContext('2d');
 
     // Créez un graphique à partir des données
     new Chart(ctx, {
@@ -111,9 +112,96 @@
                 }],
                 y: [{
                     display: true,// Afficher l'axe Y
+                    // type : 'logarithmic',
                     scaleLabel: {
                         display: true,
                         labelString: 'Valeurs' // Étiquette de l'axe Y
+                    }
+                }]
+            }
+        }
+    });
+
+    /* DEUXIEME GRAPHIQUE */
+    // Créez un div pour le conteneur du deuxième graphique
+    var chartContainer2 = document.createElement("div");
+    chartContainer2.id = "chart-container2";
+
+    // Créez un canvas pour le deuxième graphique
+    var chartCanvas2 = document.createElement("canvas");
+
+    // Ajoutez le canvas au div du deuxième graphique
+    chartContainer2.appendChild(chartCanvas2);
+
+    // Trouvez le tableau existant pour le deuxième graphique
+    var table2 = document.getElementById("table2");
+
+    // Insérez le conteneur du deuxième graphique juste au-dessus du tableau
+    table2.parentNode.insertBefore(chartContainer2, table2);
+
+    // Créez un tableau pour stocker les noms des pays (échelle de mesure X)
+    var countryNames = [];
+
+    // Créez un tableau pour stocker les données de prisonniers par année (unités de mesure Y)
+    var prisonData = [];
+
+    // Extrayez les données des rangées du deuxième tableau
+    var rows2 = table2.querySelector("tbody").querySelectorAll("tr");
+
+    // Parcourez les rangées pour extraire les noms de pays et les données
+    for (var i = 0; i < rows2.length; i++) {
+        var row = rows2[i];
+        var cells = row.querySelectorAll("td");
+        
+        if (cells.length >= 3) { // Assurez-vous qu'il y a suffisamment de cellules de données
+            var countryName = cells[0].textContent;
+            var prisonValues = [parseFloat(cells[1].textContent), parseFloat(cells[2].textContent)];
+
+            countryNames.push(countryName);
+            prisonData.push(prisonValues);
+        }
+    }
+
+    // Créez un tableau de datasets pour Chart.js
+    var datasets2 = [];
+
+    for (var i = 0; i < prisonData.length; i++) {
+        datasets2.push({
+            label: countryNames[i],
+            data: prisonData[i],
+            backgroundColor: colors[i % colors.length], // Attribution de couleurs différentes
+            borderWidth: 1
+        });
+    }
+
+    // Créez un objet de données pour le deuxième graphique
+    var chartData2 = {
+        labels: ["2007-09", "2010-12"], // Années
+        datasets: datasets2
+    };
+
+    // Créez un contexte pour le canvas du deuxième graphique
+    var ctx2 = chartCanvas2.getContext('2d');
+
+    // Créez un graphique à partir des données
+    new Chart(ctx2, {
+        type: 'bar', // Utilisez un graphique de type bar
+        data: chartData2,
+        options: {
+            responsive: true,
+            scales: {
+                x: [{
+                    display: true, // Afficher l'axe X
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Années' // Étiquette de l'axe X
+                    }
+                }],
+                y: [{
+                    display: true, // Afficher l'axe Y
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Nombre de personnes en prison' // Étiquette de l'axe Y
                     }
                 }]
             }

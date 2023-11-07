@@ -34,7 +34,7 @@
     // Extrayez les données des pays des rangées suivantes
     var rows = tbody.querySelectorAll("tr");
 
-    // Palette de couleurs
+    // Palette de couleurs pour différencier les pays
     var colors = [
         'rgba(75, 192, 192, 1)',
         'rgba(255, 99, 132, 1)',
@@ -93,7 +93,7 @@
     // Créez un contexte pour le canvas
     var ctx = chartCanvas1.getContext('2d');
 
-    // Créez un graphique à partir des données
+    // Créez un graphique à partir des données avec Chart.js
     new Chart(ctx, {
         type: 'line',
         data: chartData,
@@ -207,4 +207,6 @@
             }
         }
     });
+
+    /* DYNAMIC CANVAS  */
 })();

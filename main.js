@@ -210,12 +210,12 @@
 
     /* DYNAMIC CANVAS */
     // Sélectionner l'élément avec l'id "firstHeading"
-    var firstHeading3 = document.getElementById("firstHeading");
+    var firstHeading = document.getElementById("firstHeading");
 
     // Créer une div dynamique
     var chartContainer3 = document.createElement("div");
     chartContainer3.id = "chartContainer3";
-    firstHeading3.parentNode.insertBefore(chartContainer3, firstHeading3.nextSibling);
+    firstHeading.parentNode.insertBefore(chartContainer3, firstHeading.nextSibling);
 
     // Créer un élément canvas dynamique à l'intérieur de la div
     var canvas3 = document.createElement("canvas");
@@ -224,5 +224,45 @@
     canvas3.height = 400;
     chartContainer3.appendChild(canvas3);
 
+    // Initialiser le graphique avec des données vides
+    var ctx3 = canvas3.getContext('2d');
+    var chart3 = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Graphique dynamique',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                x: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
+    // Fonction pour mettre à jour les données du graphique
+    function updateChart3() {
+        // Faire une requête fetch pour récupérer les données du lien
+        fetch("https://canvasjs.com/services/data/datapoints.php?xstart=" + chart3.data.labels.length + "&ystart=" + (chart3.data.datasets[0].data.length > 0 ? chart3.data.datasets[0].data[chart3.data.datasets[0].data.length - 1] : 10) + "&length=1&type=json")
+            .then(response => response.json())
+            .then(newData3 => {
+                if (newData3.length > 0) {
+                    chart3.data.labels.push(parseInt(newData3[0][0]));
+                    chart3.data.datasets[0].data.push(parseInt(newData3[0][1]));
 
+                    // Mettre à jour le graphique
+                    chart3.update();
+                }
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données :', error));
+    }
+    // Appeler la fonction de mise à jour toutes les secondes
+    setInterval(updateChart3, 1000);
 })();

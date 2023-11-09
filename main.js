@@ -208,5 +208,21 @@
         }
     });
 
-    /* DYNAMIC CANVAS  */
+    /* DYNAMIC CANVAS */
+    // Sélectionner l'élément avec l'id "firstHeading"
+    var firstHeading3 = document.getElementById("firstHeading");
+
+    // Créer une div dynamique
+    var chartContainer3 = document.createElement("div");
+    chartContainer3.id = "chartContainer3";
+    firstHeading3.parentNode.insertBefore(chartContainer3, firstHeading3.nextSibling);
+
+    // Créer un élément canvas dynamique à l'intérieur de la div
+    var canvas3 = document.createElement("canvas");
+    canvas3.id = "myChart3";
+    canvas3.width = 600;
+    canvas3.height = 400;
+    chartContainer3.appendChild(canvas3);
+
+
 })();

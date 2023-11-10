@@ -1,5 +1,9 @@
 # js-datavisualisation-challenge
 
+
+## Lien de visite du projet
+
+[https://harbingar.github.io/js-datavisualisation-challenge/ ](https://harbingar.github.io/js-datavisualisation-challenge/ "lien projet cookie-clicker en ligne")
 ## Objectif
 - Découvrir les bibliothèques JS (chart.js)
 - Récupérer et addapter des tableaux HTML en graphiques avec javascript et chart.js
